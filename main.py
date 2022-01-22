@@ -1,18 +1,36 @@
-# This is a sample Python script.
+import lyricsgenius
+import re
+from poetpy import get_poetry
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
+# Clean up the lyrics data removing all text besides the lyrics
+def process_lyrics(text: str) -> str:
+    return re.sub("\[{1}.*\]{1}|\n+|EmbedShare|URL.*Copy", ' ', text)
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+# API Testing
+def lyric_demo():
+    with open('credentials.txt', 'r') as f:
+        token = f.read()
+
+    genius = lyricsgenius.Genius(token)
+
+    song = genius.search_song(artist='AC/DC', title='All Screwed Up')
+
+    lyrics = process_lyrics(song.lyrics)
+
+    print(lyrics)
+
+# API Testing
+def poetry_demo():
+    # List of authors
+    authors = get_poetry('author')
 
 
 
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
+
+
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
