@@ -1,3 +1,6 @@
+from random import choice, choices
+
+
 class Graph:
     """
     Represents a Markov chain model as a list of vertices
@@ -49,11 +52,7 @@ class Graph:
                 # Add edge to the vertex
                 self.vertices[index].addEdge(src[i+1])
 
-
-
-
-
-    def randomWalk(self, length: int):
+    def generatePoem(self, length: int):
         """
         Returns a string(poem) built from a walk along the graph for a given
         number of steps(length)
@@ -61,5 +60,24 @@ class Graph:
         :param length: The number of steps(words) to return
         :return poem:  The string representing a generated poem
         """
-        pass
+        # Pick a random word/vertex to start at
+        current = choice(self.vertices)
+        poem = current.val
 
+        for _ in range(length):
+            # Pick a random edge to follow get it's val
+            next_val = choices(
+                              list(current.edges.keys()),
+                              weights=list(current.edges.values()),
+                              k=1
+                              )
+            # Random.choices() returns a list convert it to a string
+            next_val = str(next_val[0])
+
+            # Append the word to the poem
+            poem = poem + ' ' + next_val
+
+            # Get the vertex corresponding to the edge
+            current = self.vertices[self.find(next_val)]
+
+        return poem

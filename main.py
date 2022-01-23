@@ -16,18 +16,21 @@ def lyric_demo():
 
     genius = lyricsgenius.Genius(token)
 
-    song = genius.search_song(artist='AC/DC', title='All Screwed Up')
+    songs = ['All Screwed Up', 'Highway to Hell', 'Thunderstruck']
+    lyrics = ''
 
-    lyrics = process_lyrics(song.lyrics)
+    for song in songs:
+        data = genius.search_song(artist='AC/DC', title=song)
+        lyrics += process_lyrics(data.lyrics)
 
-    return lyrics
+    return lyrics.lower()
 
 
 # API Testing
 def poetry_demo():
     # List of authors
-    authors = get_poetry('author')
-
+    # authors = get_poetry('author')
+    poetry =
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
@@ -36,7 +39,7 @@ if __name__ == '__main__':
     lyrics = lyric_demo()
     src = lyrics.split()
     myg = Graph(src)
-    for v in myg.vertices:
-        print(v.val)
-        print(v.edges)
-
+    # for v in myg.vertices:
+    #     print(v.val)
+    #     print(v.edges)
+    print(myg.generatePoem(10))
