@@ -1,11 +1,13 @@
 import lyricsgenius
 import re
 from poetpy import get_poetry
+from Graph import Graph
 
 
 # Clean up the lyrics data removing all text besides the lyrics
 def process_lyrics(text: str) -> str:
-    return re.sub("\[{1}.*\]{1}|\n+|EmbedShare|URL.*Copy", ' ', text)
+    return re.sub("\[{1}.*\]{1}|\n+|EmbedShare|URL.*Copy|\)|\(", ' ', text)
+
 
 # API Testing
 def lyric_demo():
@@ -18,7 +20,8 @@ def lyric_demo():
 
     lyrics = process_lyrics(song.lyrics)
 
-    print(lyrics)
+    return lyrics
+
 
 # API Testing
 def poetry_demo():
@@ -26,11 +29,14 @@ def poetry_demo():
     authors = get_poetry('author')
 
 
-
-
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
+    # txt = ['yo', 'sup', 'dude', 'yeah']
 
+    lyrics = lyric_demo()
+    src = lyrics.split()
+    myg = Graph(src)
+    for v in myg.vertices:
+        print(v.val)
+        print(v.edges)
 
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
