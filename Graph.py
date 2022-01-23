@@ -7,7 +7,7 @@ class Graph:
     """
     class Vertex:
         """
-        Represents a node in the graph contains a dictionary of
+        Represents a node in the graph; contains a dictionary of
         edges directed at other vertices
         """
 
