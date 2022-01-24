@@ -49,10 +49,12 @@ if __name__ == '__main__':
     src = txt.split()
 
 
-
-
     myg = Graph(src)
     # for v in myg.vertices:
     #     print(v.val)
     #     print(v.edges)
-    print(myg.generatePoem(10))
+    while(True):
+        if input('continue?') != 'y':
+            break
+        print(myg.generatePoem(10))
+
