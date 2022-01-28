@@ -1,28 +1,30 @@
 import PySimpleGUI as sg
+from poetpy import get_poetry
 
 
 sg.theme('BluePurple')
 
+# Get the list of authors currently available on poetdb
+authors_list = list(get_poetry('author')['authors'])
 
+poem_list = []
 poem = ""
 
-# layout = [[sg.Text('Your typed chars appear here:'), sg.Text(size=(15,1), key='-OUTPUT-')],
-#           [sg.Input(key='-IN-')],
-#           [sg.Button('Show'), sg.Button('Exit')]]
+poetry_layout = [
+                    [sg.T('Pick an author to include. ')],
+                    [sg.Listbox(authors_list, size=(25, 8)), sg.Listbox(poem_list, size=(25, 8))]
+                ]
 
-tab1_layout = [[sg.T('This is inside tab 1')]]
-
-tab2_layout = [[sg.T('This is inside tab 2')],
-               [sg.In(key='in')]]
-
-col1 = []
-
-
+lyrics_layout = [
+                    [sg.T('Search for an artist.')],
+                    [sg.In(key='in')]
+                ]
 
 layout = [
-            [sg.TabGroup([[sg.Tab('Tab 1', tab1_layout), sg.Tab('Tab 2', tab2_layout)]], size=(400, 200)), sg.Listbox(['sup', 'howdy', 'yo'], size=(200, 10))],
-            [sg.Multiline(poem, size=(75, 200)), sg.Button('Generate Poem')]
-          ]
+    [sg.TabGroup([[sg.Tab('Poetry', poetry_layout), sg.Tab('Lyrics', lyrics_layout)]], size=(550, 200)), sg.Listbox(['sup', 'howdy', 'yo'], size=(25, 10))],
+    [sg.Multiline(poem, size=(76, 200)), sg.Push(), sg.vbottom(sg.Button('Generate Poem'))]
+]
+
 
 window = sg.Window('Poetry Generator', layout, size=(800, 400))
 

@@ -16,11 +16,13 @@ class Graph:
             self.edges = {}
 
         def addEdge(self, word: str):
+            self.edges[word] = self.edges.get(word, 0) + 1
+            """
             if word in self.edges.keys():
                 self.edges[word] += 1
             else:
                 self.edges[word] = 1
-
+            """
     def __init__(self, src: []):
         self.vertices = []
         self.build(src)

@@ -10,51 +10,55 @@ def process_lyrics(text: str) -> str:
 
 
 # API Testing
-def lyric_demo():
+def lyric_demo(artist, songs):
     with open('credentials.txt', 'r') as f:
         token = f.read()
 
     genius = lyricsgenius.Genius(token)
 
-    songs = ['All Screwed Up', 'Highway to Hell', 'Thunderstruck']
+    # songs = ['All Screwed Up', 'Highway to Hell', 'Thunderstruck']
     lyrics = ''
 
     for song in songs:
-        data = genius.search_song(artist='AC/DC', title=song)
+        data = genius.search_song(artist=artist, title=song)
         lyrics += process_lyrics(data.lyrics)
 
     return lyrics.lower()
 
 
 # API Testing
-def poetry_demo():
+def poetry_demo(author):
     # List of authors
     # authors = get_poetry('author')
-    txt = get_poetry('author', 'Emily Dickinson', 'lines', 'text')
+    txt = get_poetry('author', author, 'lines', 'text')
     txt = txt.replace('--', '')
     txt = txt.replace('lines', '')
 
     return txt.lower()
 
+
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    # txt = ['yo', 'sup', 'dude', 'yeah']
 
-    lyrics = lyric_demo()
+    qArtist = 'AC/DC'
+    qSongs = ['All Screwed Up', 'Highway to Hell', 'Thunderstruck']
+    qAuthor = 'William Shakespeare'
 
-    poem = poetry_demo()
+    lyrics = lyric_demo(qArtist, qSongs)
 
+    poem = poetry_demo(qAuthor)
+
+    # Concatenate lyrics and poetry
     txt = lyrics + ' ' + poem
 
     src = txt.split()
-
 
     myg = Graph(src)
     # for v in myg.vertices:
     #     print(v.val)
     #     print(v.edges)
-    while(True):
-        if input('continue?') != 'y':
+
+    while True:
+        if input('Continue? ') not in ['y', 'Y']:
             break
         print(myg.generatePoem(10))
-
