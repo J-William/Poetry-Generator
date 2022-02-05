@@ -27,26 +27,27 @@ def lyric_demo(artist, songs):
 
 
 # API Testing
-def poetry_demo(author):
+def poetry_demo(author, title):
     # List of authors
     # authors = get_poetry('author')
-    txt = get_poetry('author', author, 'lines', 'text')
+    txt = get_poetry('author,title', author+';'+title, 'lines', 'text')
     txt = txt.replace('--', '')
     txt = txt.replace('lines', '')
 
     return txt.lower()
 
 
-# Press the green button in the gutter to run the script.
+
 if __name__ == '__main__':
 
     qArtist = 'AC/DC'
     qSongs = ['All Screwed Up', 'Highway to Hell', 'Thunderstruck']
     qAuthor = 'William Shakespeare'
 
+
     lyrics = lyric_demo(qArtist, qSongs)
 
-    poem = poetry_demo(qAuthor)
+    poem = poetry_demo(qAuthor, qTitle)
 
     # Concatenate lyrics and poetry
     txt = lyrics + ' ' + poem
