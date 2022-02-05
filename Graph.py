@@ -54,7 +54,7 @@ class Graph:
                 # Add edge to the vertex
                 self.vertices[index].addEdge(src[i+1])
 
-    def generatePoem(self, length: int):
+    def walk(self, length: int):
         """
         Returns a string(poem) built from a walk along the graph for a given
         number of steps(length)
