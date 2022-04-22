@@ -15,16 +15,15 @@ sg.theme('BluePurple')
 
 
 
-buttons_column = [
+shuttle_buttons_column = [
         [sg.Button('Add', size=(8,2), key='addTitle')],
         [sg.Button('Remove', size=(8,2), key='removeTitle')]
 ]
 
-lower_right_column = [
+instructions_column = [
     [sg.T('Choose different combinations of poems ')],
-    [sg.T('with the shuttle buttons to use as models')],
+    [sg.T('with the shuttle buttons to use as models ')],
     [sg.T('for generating new text.')]
-#    [sg.Push(), sg.vbottom(sg.Button('Generate Poem', key='generatePoem'))]
 ]
 
 # main layout
@@ -32,14 +31,14 @@ layout = [
     # Row 1
     [
         sg.Listbox(authors_list, size=(30, 15), enable_events=True, key='authorChoice'),
-        sg.Listbox([], size=(50, 15), key='poemChoice', select_mode="multiple"),
-        sg.Column(buttons_column, element_justification='center'),
+        sg.Listbox([], size=(50, 15), key='poemChoice'),
+        sg.Column(shuttle_buttons_column, element_justification='center'),
         sg.Listbox([], size=(75, 15), key='modelItems')
     ],
     # Row 2
     [
         sg.Multiline(size=(84, 20), key='poemOutput'),
-        sg.Push(), sg.Column(lower_right_column, element_justification='left'),
+        sg.Push(), sg.Column(instructions_column, element_justification='left'),
         sg.Push(), sg.vbottom(sg.Button('Generate Poem', key='generatePoem'))
     ]
 ]
@@ -74,17 +73,31 @@ while True:  # Event Loop
         # Flush the old model anytime training list is changed
         app.model = None
 
+
+    # Poem removed from training list
+    if event == 'removeTitle':
+        # Get state values
+        titles_to_remove = values['modelItems']
+        
+        # Not the most efficient way :/
+        for author in app.poems:
+            for title in app.poems[author]:
+                if title in titles_to_remove:
+                    app.poems[author].remove(title)
+        
+        # Flush the old model anytime training list is changed
+        app.model = None
+
     # Generate a poem
     if event == 'generatePoem':
-        newPoem = app.generatePoem(10)
-        window['poemOutput'].update(newPoem)
+        if app.poems:
+            newPoem = app.generatePoem(10)
+            window['poemOutput'].update(newPoem)
+        else:
+            window['poemOutput'].update('You must select a poem to generate text.')
 
     # Update the training list
     window['modelItems'].update(app.listItems())
 
-
-print('----Memory Dump----')
-print('Poems: ', app.poems)
-print('Songs: ', app.songs)
 
 window.close()

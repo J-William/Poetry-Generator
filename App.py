@@ -21,15 +21,9 @@ def getPoem(author, title):
     return txt.lower()
 
 
-def getSong(artist, song):
-    """Return the lyrics of a given song"""
-    pass
-
-
 class App:
     def __init__(self):
         self.poems = {}
-        self.songs = {}
         self.data = ''
         self.model = None
 
@@ -39,11 +33,8 @@ class App:
 
         for author in self.poems.keys():
             for title in self.poems[author]:
-                output.append(author+' -- '+title)
+                output.append(title)
 
-        for artist in self.songs.keys():
-            for song in self.songs[artist]:
-                output.append(artist+' -- '+song)
 
         return output
 
@@ -52,10 +43,6 @@ class App:
         for author in self.poems.keys():
             for title in self.poems[author]:
                 self.data += getPoem(author, title)
-
-        for artist in self.songs.keys():
-            for song in self.songs[artist]:
-                self.data += getSong(artist, song)
 
     def buildModel(self):
         """Build the markov chain model"""
