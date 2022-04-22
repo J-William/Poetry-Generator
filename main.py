@@ -13,40 +13,38 @@ authors_list = getAvailableAuthors()
 # LAYOUT ===============================================================================================================
 sg.theme('BluePurple')
 
-# poetry tab sub-layout
-poetry_layout = [
-    # Row 1 Title
-    [sg.T('Pick an author to include. ')],
-    # Row 2 Content
-    [
-        sg.Listbox(authors_list, size=(25, 8), enable_events=True, key='authorChoice'),
-        sg.Listbox([], size=(28, 8), key='poemChoice', select_mode="multiple"),
-        sg.vbottom(sg.Button('Add', key='addTitle'))
-    ]
+
+
+buttons_column = [
+        [sg.Button('Add', size=(8,2), key='addTitle')],
+        [sg.Button('Remove', size=(8,2), key='removeTitle')]
 ]
 
-# lyrics tab sub-layout
-lyrics_layout = [
-    [sg.T('Search for an artist.')],
-    [sg.In(key='artistSearch')]
+lower_right_column = [
+    [sg.T('Choose different combinations of poems ')],
+    [sg.T('with the shuttle buttons to use as models')],
+    [sg.T('for generating new text.')]
+#    [sg.Push(), sg.vbottom(sg.Button('Generate Poem', key='generatePoem'))]
 ]
 
 # main layout
 layout = [
     # Row 1
     [
-        sg.TabGroup([[sg.Tab('Poetry', poetry_layout)]], size=(550, 200),
-                    key='tabGroup'),
-        sg.Listbox([], size=(25, 10), key='modelItems')
+        sg.Listbox(authors_list, size=(30, 15), enable_events=True, key='authorChoice'),
+        sg.Listbox([], size=(50, 15), key='poemChoice', select_mode="multiple"),
+        sg.Column(buttons_column, element_justification='center'),
+        sg.Listbox([], size=(75, 15), key='modelItems')
     ],
     # Row 2
     [
-        sg.Multiline(size=(76, 200), key='poemOutput'), sg.Push(),
-        sg.vbottom(sg.Button('Generate Poem', key='generatePoem'))
+        sg.Multiline(size=(84, 20), key='poemOutput'),
+        sg.Push(), sg.Column(lower_right_column, element_justification='left'),
+        sg.Push(), sg.vbottom(sg.Button('Generate Poem', key='generatePoem'))
     ]
 ]
 
-window = sg.Window('Poetry Generator', layout, size=(800, 400))
+window = sg.Window('Poetry Generator', layout, size=(1200, 500))
 
 # EVENT LOOP ===========================================================================================================
 while True:  # Event Loop
