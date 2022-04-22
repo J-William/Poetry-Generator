@@ -35,7 +35,7 @@ lyrics_layout = [
 layout = [
     # Row 1
     [
-        sg.TabGroup([[sg.Tab('Poetry', poetry_layout), sg.Tab('Lyrics', lyrics_layout)]], size=(550, 200),
+        sg.TabGroup([[sg.Tab('Poetry', poetry_layout)]], size=(550, 200),
                     key='tabGroup'),
         sg.Listbox([], size=(25, 10), key='modelItems')
     ],
